@@ -1,0 +1,119 @@
+/* 1. Style général */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* 2. Barre de navigation */
+.navbar {
+  margin-bottom: 30px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.nav-link {
+  font-size: 1.1rem;
+}
+
+/* 3. Contenu principal */
+main {
+  background-color: #ffffff;
+  padding: 40px 0;
+}
+
+/* 4. Section des articles */
+#latest-news h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* 5. Cartes d'articles */
+.card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Légère élévation au survol */
+}
+
+.card img {
+  object-fit: cover;
+  height: 200px;
+}
+
+/* 6. Texte des articles */
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.card-title:hover {
+  color: #0056b3;
+}
+
+/* 7. Bouton "Lire plus" */
+.card .btn {
+  transition: background-color 0.3s ease;
+}
+
+.card .btn:hover {
+  background-color: #0056b3;
+}
+
+/* 8. Texte d'erreur */
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* 9. Footer */
+footer {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px;
+}
+
+footer p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* 10. Animation pour les articles */
+.card {
+  opacity: 0;
+  animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* 11. Responsive : Ajustements pour les petits écrans */
+@media (max-width: 768px) {
+  .card {
+      height: 100%;
+  }
+
+  .card img {
+      height: 150px;
+  }
+
+  .navbar-toggler {
+      margin-right: 15px;
+  }
+}

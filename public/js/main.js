@@ -1,53 +1,60 @@
-// Fonction pour récupérer et afficher les derniers articles
 async function fetchLatestNews() {
     try {
         const response = await fetch('/api/news');
+        if (!response.ok) throw new Error('Erreur réseau');
+
         const data = await response.json();
-        displayNews(data.posts);
+        if (data && data.posts) {
+            displayNews(data.posts);
+        } else {
+            showError('Aucun article disponible');
+        }
     } catch (error) {
         console.error('Erreur:', error);
         showError('Impossible de charger les articles');
     }
 }
 
-// TODO: Question 1 - Compléter la fonction displayNews
+// Fonction pour afficher les articles
 function displayNews(news) {
-    // Sélectionner le conteneur dans lequel les articles seront affichés
     const container = document.getElementById('news-container');
-    
-    // Vider le conteneur avant d'ajouter de nouveaux articles
-    container.innerHTML = '';
+    if (!container) return;
 
-    // Pour chaque article dans la liste `news`
+    container.innerHTML = ''; // Vider le conteneur avant d'ajouter des articles
+
+    if (news.length === 0) {
+        container.innerHTML = `<p class="text-center text-muted">Aucun article disponible pour le moment.</p>`;
+        return;
+    }
+
     news.forEach(article => {
-        // Créer une carte Bootstrap pour chaque article
         const articleCard = document.createElement('div');
-        articleCard.classList.add('col-md-4', 'mb-4'); // Utilisation des classes Bootstrap pour le layout responsive
+        articleCard.classList.add('col-md-4', 'mb-4', 'animate__animated', 'animate__fadeInUp');
 
-        // Créer le contenu HTML de la carte
+        const title = article.title || 'Titre indisponible';
+        const excerpt = article.excerpt || 'Aucun résumé disponible.';
+        const imageUrl = article.imageUrl || 'https://via.placeholder.com/300x200?text=Image+indisponible';
+        const articleUrl = `/api/news/${article.id}`;  // Redirection vers l'URL avec l'ID de l'article
+
         articleCard.innerHTML = `
-            <div class="card shadow-sm">
-                <img src="${article.imageUrl}" class="card-img-top" alt="${article.title}">
-                <div class="card-body">
-                    <h5 class="card-title">${article.title}</h5>
-                    <p class="card-text">${article.excerpt}</p>
-                    <a href="/article/${article.id}" class="btn btn-primary">Lire plus</a>
+            <div class="card shadow-sm h-100">
+                <img src="${imageUrl}" class="card-img-top" alt="${title}">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">${title}</h5>
+                    <p class="card-text">${excerpt}</p>
+                    <a href="${articleUrl}" class="btn btn-primary mt-auto">Lire plus</a>
                 </div>
             </div>
         `;
         
-        // Ajouter la carte dans le conteneur
         container.appendChild(articleCard);
     });
 }
 
-
-// TODO: Question 2 - Créer une fonction pour gérer les erreurs
+// Fonction pour afficher un message d'erreur
 function showError(message) {
-    // Afficher un message d'erreur avec Bootstrap
+    const container = document.getElementById('news-container');
+    container.innerHTML = `<div class="alert alert-danger text-center">${message}</div>`;
 }
 
-// Initialisation
 document.addEventListener('DOMContentLoaded', fetchLatestNews);
-
-fetchLatestNews()
