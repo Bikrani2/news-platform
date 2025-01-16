@@ -5,7 +5,7 @@ const path = require('path');
 const newsRoutes = require('./routes/newsRoutes'); // Importer les routes
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8020;
 
 // Middleware pour loguer chaque requête entrante
 app.use((req, res, next) => {
